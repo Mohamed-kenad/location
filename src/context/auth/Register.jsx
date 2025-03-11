@@ -17,7 +17,7 @@ function Register() {
     e.preventDefault();
 
     try {
-      const response = await axios.get("http://localhost:8080/users");
+      const response = await axios.get("https://json-server-api-q84y.onrender.com/users");
       const users = response.data;
 
       if (users.some(user => user.email === email)) {
@@ -43,7 +43,7 @@ function Register() {
         role: "user"
       };
 
-      await axios.post("http://localhost:8080/users", newUser);
+      await axios.post("https://json-server-api-q84y.onrender.com/users", newUser);
 
       Swal.fire({
         title: "Registration Successful",

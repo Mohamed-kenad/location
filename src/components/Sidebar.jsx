@@ -17,7 +17,7 @@ export default function Sidebar() {
   useEffect(()=>{
     const fetchContrats = async () => {
       try {
-         await axios.get("http://localhost:8080/contrats?statut=pending")
+         await axios.get("https://json-server-api-q84y.onrender.com/contrats?statut=pending")
      .then((res)=>setNum(res.data.length) )}
       catch (error) {
         console.log(error);

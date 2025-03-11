@@ -14,7 +14,7 @@ function Login() {
     e.preventDefault();
   
     try {
-      const response = await axios.get("http://localhost:8080/users");
+      const response = await axios.get("https://json-server-api-q84y.onrender.com/users");
       const users = response.data;
       const loggedInUser = users.find((user) => user.email === email && user.password === password);
   

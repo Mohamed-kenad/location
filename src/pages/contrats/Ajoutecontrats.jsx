@@ -74,7 +74,7 @@ export default function AjouterContrats({ voitures, c, setContrats ,closeContrac
             statut: "confirmed"
         };
 
-        axios.post("http://localhost:8080/contrats", contractData)
+        axios.post("https://json-server-api-q84y.onrender.com/contrats", contractData)
             .then(res => {
                 setContrats(prevContrats => [...prevContrats, res.data]);
 

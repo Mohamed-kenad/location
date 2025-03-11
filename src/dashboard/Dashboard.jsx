@@ -56,12 +56,12 @@ const Dashboard = () => {
 
 
     useEffect(() => {
-        axios.get("http://localhost:8080/voitures")
+        axios.get("https://json-server-api-q84y.onrender.com/voitures")
             .then(res => {
                 const available = res.data.filter(vehicle => vehicle.disponible === true).length;
                 setVoitures(available);
             })   
-            axios.get("http://localhost:8080/contrats")
+            axios.get("https://json-server-api-q84y.onrender.com/contrats")
             .then(res => {
                 const Active=res.data.filter((c)=> new Date(c.datefin) >= new Date() && c.statut === "confirmed").length;
                 setC(res.data)

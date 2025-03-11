@@ -42,7 +42,7 @@ const Voitures = () => {
   };
 
   useEffect(() => {
-    axios.get("http://localhost:8080/voitures")
+    axios.get("https://json-server-api-q84y.onrender.com/voitures")
       .then(res => setCars(res.data))
       .catch(err => console.error("Error fetching cars:", err));
   }, []);
@@ -197,7 +197,7 @@ const Voitures = () => {
               </button>
             </div>
             <div className="row g-4 w-100 justify-content-center">
-              {cars.slice(0, 2).map(car => (
+              {cars.slice(0, 3).map(car => (
                 <div key={car.id} className="col-md-4">
                   <div className="card h-100" style={{
                     ...transitionStyle,

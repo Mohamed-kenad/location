@@ -21,7 +21,7 @@ const Navbar = ({ scrollToSection, toggleTheme, isDarkMode }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/contrats`).then((res) => {
+    axios.get(`https://json-server-api-q84y.onrender.com/contrats`).then((res) => {
       setContracts(res.data);
       
       // Transform contracts into notifications

@@ -9,7 +9,7 @@ export default function Demande({ c, clients, voitures, open, setContrats }) {
 
   const updateContractStatus = (contractId, newStatus) => {
     
-    axios.put(`http://localhost:8080/contrats/${contractId}`, { ...c, statut: newStatus })
+    axios.put(`https://json-server-api-q84y.onrender.com/contrats/${contractId}`, { ...c, statut: newStatus })
       .then(() => {
         Swal.fire(
           newStatus === "confirmed" ? "Confirmed" : "Canceled",

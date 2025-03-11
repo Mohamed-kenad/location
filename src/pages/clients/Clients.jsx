@@ -31,7 +31,7 @@ const Clients = () => {
   };
 
   useEffect(() => {
-    axios.get("http://localhost:8080/client")
+    axios.get("https://json-server-api-q84y.onrender.com/client")
       .then((res) => { setClients(res.data) });
   }, []);
 
@@ -55,7 +55,7 @@ const Clients = () => {
       confirmButtonText: "Oui, supprimer !"
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:8080/client/${id}`)
+        axios.delete(`https://json-server-api-q84y.onrender.com/client/${id}`)
           .then(() => {
             Swal.fire("Supprimé!", "Le client a été supprimé.", "success");
             setClients((data) => data.filter((client) => client.id !== id));
@@ -83,14 +83,14 @@ const Clients = () => {
  
   const handleSubmit = () => {
     if (modalMode === 'edit') {
-      axios.put(`http://localhost:8080/client/${selectedClient.id}`, selectedClient)
+      axios.put(`https://json-server-api-q84y.onrender.com/client/${selectedClient.id}`, selectedClient)
         .then((res) => {
           setClients((data) => data.map((client) => client.id === selectedClient.id ? res.data : client));
           Swal.fire("Mis à jour!", "Les informations de client ont été modifiées.", "success");
           hideModal();
         });
     } else {
-      axios.post("http://localhost:8080/client", selectedClient)
+      axios.post("https://json-server-api-q84y.onrender.com/client", selectedClient)
         .then((res) => {
           setClients((prevClients) => [...prevClients, res.data]);
           Swal.fire("Ajouté!", "Le client a été ajoutée avec succès.", "success");

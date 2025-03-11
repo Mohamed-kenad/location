@@ -13,15 +13,15 @@ export default function Contrats() {
   const [filterStatus, setFilterStatus] = useState("all");
 
   useEffect(() => {
-    axios.get("http://localhost:8080/voitures/")
+    axios.get("https://json-server-api-q84y.onrender.com/voitures/")
       .then(res => setVoitures(res.data))
       .catch(err => console.log(err));
-      axios.get("http://localhost:8080/client")
+      axios.get("https://json-server-api-q84y.onrender.com/client")
       .then(res => setClients(res.data))
       .catch(err => console.log(err));
   }, []);
   useEffect(() => {
-    axios.get("http://localhost:8080/contrats")
+    axios.get("https://json-server-api-q84y.onrender.com/contrats")
       .then(res => {
         const sortedContrats = res.data.sort((a, b) => new Date(b.datedebut) - new Date(a.datedebut));
         setContrats(sortedContrats);

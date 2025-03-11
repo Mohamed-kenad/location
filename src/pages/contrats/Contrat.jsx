@@ -34,7 +34,7 @@ export default function Contrat({ c, clients, voitures, contrats, open,setContra
 
         if (isAvailable !== car.disponible) {
           const updatedCar = { ...car, disponible: isAvailable };
-          axios.put(`http://localhost:8080/voitures/${updatedCar.id}`, updatedCar);
+          axios.put(`https://json-server-api-q84y.onrender.com/voitures/${updatedCar.id}`, updatedCar);
         }
       });
     } else {
@@ -43,7 +43,7 @@ export default function Contrat({ c, clients, voitures, contrats, open,setContra
   }, [voitures, contrats]);
 
   // const updateContractStatus = (contractId, newStatus) => {
-  //   axios.put(`http://localhost:8080/contrats/${contractId}`, { ...c, statut: newStatus })
+  //   axios.put(`https://json-server-api-q84y.onrender.com/contrats/${contractId}`, { ...c, statut: newStatus })
   //     .then(() => {
   //       Swal.fire(
   //         newStatus === "confirmed" ? "Confirmed" : "Canceled",

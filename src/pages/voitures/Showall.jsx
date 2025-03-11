@@ -72,7 +72,7 @@ const ShowAll = () => {
       setFilteredCars(passedCars);
       setIsDarkMode(location.state.isDarkMode || true);
     } else {
-      axios.get("http://localhost:8080/voitures")
+      axios.get("https://json-server-api-q84y.onrender.com/voitures")
         .then(res => {
           setCars(res.data);
           setFilteredCars(res.data);

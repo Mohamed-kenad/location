@@ -244,6 +244,14 @@
       "phone": "0890000",
       "cin": "JM1314",
       "permis": "15161/16"
+    },
+    {
+      "id": "cae3",
+      "firstName": "yassin",
+      "lastName": "yassin",
+      "email": "blakmostfa@gmail.com",
+      "address": "agadir",
+      "phone": "0622222222"
     }
   ],
   "contrats": [
@@ -305,7 +313,7 @@
       "datefin": "2025-03-19",
       "prix": 200,
       "total": 2600,
-      "statut": "pending"
+      "statut": "canceled"
     },
     {
       "id": "860b",
@@ -315,7 +323,7 @@
       "datefin": "2025-03-18",
       "prix": 200,
       "total": 2400,
-      "statut": "pending"
+      "statut": "canceled"
     },
     {
       "id": "3dc6",
@@ -415,6 +423,66 @@
       "datefin": "2025-03-19",
       "prix": 250,
       "total": 2000,
+      "statut": "canceled"
+    },
+    {
+      "id": "efcd",
+      "clientId": "cae3",
+      "voitureId": "2",
+      "datedebut": "2025-03-12",
+      "datefin": "2025-03-19",
+      "prix": 250,
+      "total": 2000,
+      "statut": "canceled"
+    },
+    {
+      "id": "c6a5",
+      "clientId": "cae3",
+      "voitureId": "2",
+      "datedebut": "2025-03-12",
+      "datefin": "2025-03-19",
+      "prix": 250,
+      "total": 2000,
+      "statut": "pending"
+    },
+    {
+      "id": "a41e",
+      "clientId": "cae3",
+      "voitureId": "1",
+      "datedebut": "2025-03-11",
+      "datefin": "2025-03-26",
+      "prix": 200,
+      "total": 3200,
+      "statut": "pending"
+    },
+    {
+      "id": "caad",
+      "clientId": "cae3",
+      "voitureId": "2",
+      "datedebut": "2025-03-12",
+      "datefin": "2025-03-18",
+      "prix": 250,
+      "total": 1750,
+      "statut": "pending"
+    },
+    {
+      "id": "a72d",
+      "clientId": "cae3",
+      "voitureId": "1",
+      "datedebut": "2025-03-11",
+      "datefin": "2025-03-26",
+      "prix": 200,
+      "total": 3200,
+      "statut": "pending"
+    },
+    {
+      "id": "f175",
+      "clientId": "cae3",
+      "voitureId": "3",
+      "datedebut": "2025-03-11",
+      "datefin": "2025-03-20",
+      "prix": 300,
+      "total": 3000,
       "statut": "pending"
     }
   ],
@@ -446,6 +514,18 @@
       "email": "user2@example.com",
       "password": "0000",
       "avatar": "https://cdn-icons-png.flaticon.com/512/3135/3135789.png",
+      "role": "user"
+    },
+    {
+      "id": "cae3",
+      "firstName": "yassin",
+      "lastName": "yassin",
+      "sexe": "Male",
+      "phone": "0622222222",
+      "address": "agadir",
+      "email": "blakmostfa@gmail.com",
+      "password": "0000",
+      "avatar": "https://cdn-icons-png.flaticon.com/512/3135/3135725.png",
       "role": "user"
     }
   ]

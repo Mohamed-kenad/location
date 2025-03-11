@@ -32,7 +32,7 @@ const TrackingPage = () => {
 
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:8080/contrats`);
+        const response = await axios.get(`https://json-server-api-q84y.onrender.com/contrats`);
 
         const today = new Date();
         const filteredReservations = response.data.filter((c) =>c.clientId === loggedInUser.id &&
@@ -51,7 +51,7 @@ const TrackingPage = () => {
             setReservations(filteredReservations);
           }
 
-        const carsResponse = await axios.get(`http://localhost:8080/voitures`);
+        const carsResponse = await axios.get(`https://json-server-api-q84y.onrender.com/voitures`);
         
         setCars(carsResponse.data);
 

@@ -11,12 +11,12 @@ const CarDetails = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/voitures/${id}`)
+      .get(`https://json-server-api-q84y.onrender.com/voitures/${id}`)
       .then((res) => setCar(res.data))
       .catch((err) => console.error(err));
           // Fetch contracts
     axios
-    .get("http://localhost:8080/contrats")
+    .get("https://json-server-api-q84y.onrender.com/contrats")
     .then((res) => setContracts(res.data))
     .catch((err) => console.error(err));
   }, [id]);

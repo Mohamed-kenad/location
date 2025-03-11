@@ -13,17 +13,17 @@ export default function Demandes() {
   const [itemsPerPage] = useState(5); // Number of items per page
 
   useEffect(() => {
-    axios.get("http://localhost:8080/voitures/")
+    axios.get("https://json-server-api-q84y.onrender.com/voitures/")
       .then(res => setVoitures(res.data));
 
-    axios.get("http://localhost:8080/client")
+    axios.get("https://json-server-api-q84y.onrender.com/client")
       .then(res => setClients(res.data));
   }, []);
 
   useEffect(() => {
     const fetchContrats = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/contrats");
+        const response = await axios.get("https://json-server-api-q84y.onrender.com/contrats");
         const data = response.data.filter(contrat => contrat.statut === "pending");
         const sortedContrats = data.sort((a, b) => new Date(b.datedebut) - new Date(a.datedebut));
         setContrats(sortedContrats);

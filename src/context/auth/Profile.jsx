@@ -38,7 +38,7 @@ const Profile = () => {
     };
 
     try {
-      await axios.patch(`http://localhost:8080/users/${user.id}`, updatedUser);
+      await axios.patch(`https://json-server-api-q84y.onrender.com/users/${user.id}`, updatedUser);
 
       const newUser = { ...user, ...updatedUser };
 
