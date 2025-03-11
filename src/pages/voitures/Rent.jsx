@@ -118,7 +118,7 @@ const BookingPage = () => {
     const emailParams = {
       to_email: clientEmail,
       to_name: clientName,
-      message: "Attached is your car rental agreement. ",
+      message: `Dear ${clientName},\n\nThank you for choosing our service. Attached is your rental agreement.\n\nPlease review it and let us know if you have any questions.\n\nBest regards,\nYour Rental Company`,
       attachment: pdfBase64,
     };
   
