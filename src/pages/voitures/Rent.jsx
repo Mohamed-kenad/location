@@ -118,7 +118,7 @@ const BookingPage = () => {
     const emailParams = {
       to_email: clientEmail,
       to_name: clientName,
-      message: `Dear ${clientName},\n\nThank you for choosing our service. Attached is your rental agreement.\n\nPlease review it and let us know if you have any questions.\n\nBest regards,\nYour Rental Company`,
+      message: "Attached is your car rental agreement. ",
       attachment: pdfBase64,
     };
   
@@ -196,15 +196,16 @@ const BookingPage = () => {
       const dateCreated = new Date().toLocaleDateString();
       doc.text(`Date Created: ${dateCreated}`, 10, yPos + 40);
   
-      // Convert PDF to base64 string
-      const pdfBase64 = doc.output('datauristring');
-      return pdfBase64;
+      // ✅ تحميل ملف PDF بدلاً من إرساله عبر البريد
+      doc.save("Car_Rental_Agreement.pdf");
       
     } catch (error) {
       console.error("Error generating PDF:", error);
       Swal.fire("Error", "Failed to generate PDF.", "error");
     }
   };
+      
+
       
   const calculateTotalPrice = () => {
     if (!startDate || !endDate || !car.price) return 0;
