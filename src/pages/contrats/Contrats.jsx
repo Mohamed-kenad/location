@@ -14,6 +14,16 @@ export default function Contrats() {
   const [filterStatus, setFilterStatus] = useState("all");
   const location = useLocation();
 
+useEffect(() => {
+  console.log('Location state:', location.state);
+  if (location.state?.selectedMonth) {
+    setCurrentPage(1);
+  }
+}, [location.state]);
+
+console.log('Current page:', currentPage);
+
+
   useEffect(() => {
     axios.get("https://json-server-api-q84y.onrender.com/voitures/")
       .then(res => setVoitures(res.data))
@@ -106,11 +116,6 @@ const handlePageChange = (action) => {
 };
 
 
-useEffect(() => {
-  if (location.state?.selectedMonth) {
-    setCurrentPage(1); 
-  }
-}, [location.state]);
 
 
 
