@@ -112,10 +112,6 @@ const handlePageChange = (action) => {
 
 
 
-
-
-
-
   return (
     <div className="container-fluid min-vh-100 bg-light py-4">
 
@@ -184,7 +180,7 @@ const handlePageChange = (action) => {
               </thead>
               <tbody>
                 {currentContracts.map((c) => (
-                  <Contrat key={c.id} c={c} contrats={contrats} clients={clients} voitures={voitures} open={open} setContrats={setContrats}  />
+                  <Contrat key={c.id} c={c} contrats={contrats} clients={clients} voitures={voitures} open={open} setContrats={setContrats}  setCurrentPage={setCurrentPage}  />
                 ))}
               </tbody>
             </table>

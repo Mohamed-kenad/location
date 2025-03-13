@@ -3,7 +3,7 @@ import axios from "axios";
 // import Swal from "sweetalert2";
 import { useLocation } from "react-router-dom";
 
-export default function Contrat({ c, clients, voitures, contrats, open,setContrats }) {
+export default function Contrat({ c, clients, voitures, contrats, open,setContrats,setCurrentPage }) {
   const [status, setStatus] = useState(""); 
   const [selectedMonth, setSelectedMonth] = useState(""); 
   const location = useLocation();
@@ -60,6 +60,7 @@ export default function Contrat({ c, clients, voitures, contrats, open,setContra
     if (location.state?.selectedMonth) {
 
       setSelectedMonth(location.state.selectedMonth);
+      setCurrentPage(1);
     }
   }, [location.state]); 
 
