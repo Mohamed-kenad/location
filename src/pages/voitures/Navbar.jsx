@@ -32,12 +32,17 @@ const Navbar = ({ scrollToSection, toggleTheme, isDarkMode }) => {
           title: `Car Rental Contract #${contract.id}`,
           message: `Your contract for ${contract.car?.model || 'a vehicle'} has been ${contract.statut}`,
           status: contract.statut,
-          date: new Date(contract.dateModification || contract.dateDebut),
+          date:  contract.datedebut,
           read: false,
           type: contract.statut === "confirmed" ? "success" : 
                 contract.statut === "canceled" ? "danger" : "info"
         }));
-        setNotifications(notifs);
+        const sortedNotifications = notifs.sort((a, b) => {
+          const dateA = new Date(a.date); 
+          const dateB = new Date(b.date);
+          return dateB.getTime() - dateA.getTime();
+        });
+        setNotifications(sortedNotifications);
       }
     });
 
