@@ -12,6 +12,7 @@ export default function Contrats() {
   const [clientselect, setClientselect] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
+  const location = useLocation();
 
   useEffect(() => {
     axios.get("https://json-server-api-q84y.onrender.com/voitures/")
@@ -26,6 +27,7 @@ export default function Contrats() {
       .then(res => {
         const sortedContrats = res.data.sort((a, b) => new Date(b.datedebut) - new Date(a.datedebut));
         setContrats(sortedContrats);
+        setCurrentPage(1);
       })
   }, []);
 
@@ -103,12 +105,10 @@ const handlePageChange = (action) => {
   }
 };
 
-const location = useLocation();
 
 useEffect(() => {
   if (location.state?.selectedMonth) {
-    // setSelectedMonth(location.state.selectedMonth);
-    setCurrentPage(1); 
+    setCurrentPage(1);
   }
 }, [location.state]);
 
