@@ -331,12 +331,6 @@ const BookingPage = () => {
                       />
                     </div>
                   </div>
-                    <div className="col-12">
-                        <label className="form-label fw-medium">Prix Total</label>
-                        <div className="input-group input-group-sm">
-                            <span className="input-group-text form-control form-control-lg">{calculateTotalPrice()} DH</span>
-                        </div>
-                    </div>
                     {/* <div className="col-12">
                       <div className="form-group">
                         <label className="form-label">First Name</label>

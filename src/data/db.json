@@ -604,6 +604,26 @@
       "prix": 200,
       "total": 1400,
       "statut": "pending"
+    },
+    {
+      "id": "bfce",
+      "clientId": "08ea",
+      "voitureId": "2",
+      "datedebut": "2025-03-13",
+      "datefin": "2025-03-19",
+      "prix": 250,
+      "total": 1750,
+      "statut": "pending"
+    },
+    {
+      "id": "bfeb",
+      "clientId": "08ea",
+      "voitureId": "3",
+      "datedebut": "2025-03-13",
+      "datefin": "2025-03-18",
+      "prix": 300,
+      "total": 1800,
+      "statut": "pending"
     }
   ],
   "users": [
