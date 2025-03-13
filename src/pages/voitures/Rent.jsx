@@ -151,181 +151,47 @@ const BookingPage = () => {
   
   const generatePDF = ({ car, startDate, endDate, totalPrice, loggedInUser }) => {
     try {
-      // Create a new PDF document
       const doc = new jsPDF();
-      
-      // Define professional color scheme
-      const primaryColor = [42, 65, 87]; // Dark blue header
-      const accentColor = [167, 139, 250]; // Your original purple color
-      const lightGray = [240, 240, 240];
-      
-      // ===== HEADER SECTION =====
-      doc.setFillColor(primaryColor[0], primaryColor[1], primaryColor[2]);
-      doc.rect(0, 0, 210, 35, "F");
-      
-      // Add logo if available
+  
       if (logo) {
-        doc.addImage(logo, "PNG", 10, 7, 50, 20, undefined, 'FAST');
+        doc.addImage(logo, "PNG", 10, 5, 50, 20, undefined, 'FAST');
       }
-      
-      // Add title
-      doc.setTextColor(255, 255, 255);
-      doc.setFontSize(22);
+  
+      doc.setFontSize(18);
       doc.setFont("helvetica", "bold");
-      doc.text("CAR RENTAL AGREEMENT", 105, 22, { align: "center" });
-      
-      // ===== CONTRACT INFORMATION =====
-      const contractNumber = `CRA-${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`;
-      const dateCreated = new Date().toLocaleDateString();
-      
-      // Add contract info
-      doc.setTextColor(0, 0, 0);
-      doc.setFontSize(11);
-      doc.setFont("helvetica", "bold");
-      doc.text(`Contract #: ${contractNumber}`, 15, 45);
-      doc.text(`Date: ${dateCreated}`, 150, 45);
-      
-      // Add introduction text
+      doc.text("CAR RENTAL AGREEMENT", 60, 30);
+  
+      doc.setFontSize(12);
       doc.setFont("helvetica", "normal");
-      doc.setFontSize(11);
       doc.text(
         "This Car Rental Agreement is made between the Rental Company and the Client.", 
-        15, 55
+        10, 45
       );
-      
-      // ===== VEHICLE INFORMATION SECTION =====
-      let currentY = 65;
-      
-      // Add styled header for vehicle information
-      doc.setFillColor(accentColor[0], accentColor[1], accentColor[2]);
-      doc.rect(15, currentY, 180, 8, "F");
-      doc.setTextColor(255, 255, 255);
-      doc.setFont("helvetica", "bold");
-      doc.setFontSize(12);
-      doc.text("VEHICLE INFORMATION", 105, currentY + 6, { align: "center" });
-      
-      // Vehicle details table
+  
       autoTable(doc, {
-        startY: currentY + 10,
-        margin: { left: 15, right: 15 },
+        startY: 60,
         head: [["Field", "Details"]],
         body: [
-          ["Car Model", car.modele || "N/A"],
-          ["Registration Number", car.matricule || "N/A"],
-          ["Daily Rate", `$${car.price}`],
+          ["Car Model", car.modele],
+          ["Car registration number", car.matricule],
+          ["Start Date", startDate],
+          ["End Date", endDate],
+          ["Daily rental price", `${car.price} DH`],
+          ["Total Price", `${totalPrice.toFixed(2)} DH`],
+          ["Client Name", `${loggedInUser.firstName} ${loggedInUser.lastName}`],
+          ["Phone", loggedInUser.phone],
+          ["Address", loggedInUser.address],
         ],
         theme: "grid",
-        styles: { 
-          fontSize: 10,
-          cellPadding: 5
-        },
-        headStyles: { 
-          fillColor: [80, 80, 80],
-          textColor: [255, 255, 255],
-          fontStyle: 'bold'
-        },
-        alternateRowStyles: { 
-          fillColor: lightGray
-        }
+        styles: { fontSize: 12 },
+        headStyles: { fillColor: [167, 139, 250] },
       });
-      
-      // ===== RENTAL DETAILS SECTION =====
-      currentY = doc.lastAutoTable.finalY + 10;
-      
-      // Add styled header for rental details
-      doc.setFillColor(accentColor[0], accentColor[1], accentColor[2]);
-      doc.rect(15, currentY, 180, 8, "F");
-      doc.setTextColor(255, 255, 255);
+  
+      const finalY = doc.lastAutoTable.finalY + 10;
       doc.setFont("helvetica", "bold");
-      doc.text("RENTAL DETAILS", 105, currentY + 6, { align: "center" });
-      
-      // Calculate number of days
-      let numberOfDays = 1;
-      try {
-        const start = new Date(startDate);
-        const end = new Date(endDate);
-        numberOfDays = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24) + 1) || 1;
-      } catch (e) {
-        console.warn("Error calculating days:", e);
-      }
-      
-      // Rental details table
-      autoTable(doc, {
-        startY: currentY + 10,
-        margin: { left: 15, right: 15 },
-        head: [["Field", "Details"]],
-        body: [
-          ["Start Date", startDate ? new Date(startDate).toLocaleDateString() : "N/A"],
-          ["End Date", endDate ? new Date(endDate).toLocaleDateString() : "N/A"],
-          ["Number of Days", numberOfDays],
-          ["Total Price", `$${totalPrice.toFixed(2)}`],
-        ],
-        theme: "grid",
-        styles: { 
-          fontSize: 10,
-          cellPadding: 5
-        },
-        headStyles: { 
-          fillColor: [80, 80, 80],
-          textColor: [255, 255, 255],
-          fontStyle: 'bold'
-        },
-        alternateRowStyles: { 
-          fillColor: lightGray
-        }
-      });
-      
-      // ===== CLIENT INFORMATION SECTION =====
-      currentY = doc.lastAutoTable.finalY + 10;
-      
-      // Add styled header for client information
-      doc.setFillColor(accentColor[0], accentColor[1], accentColor[2]);
-      doc.rect(15, currentY, 180, 8, "F");
-      doc.setTextColor(255, 255, 255);
-      doc.setFont("helvetica", "bold");
-      doc.text("CLIENT INFORMATION", 105, currentY + 6, { align: "center" });
-      
-      // Client details table
-      autoTable(doc, {
-        startY: currentY + 10,
-        margin: { left: 15, right: 15 },
-        head: [["Field", "Details"]],
-        body: [
-          ["Full Name", `${loggedInUser.firstName || ""} ${loggedInUser.lastName || ""}`],
-          ["Phone", loggedInUser.phone || "N/A"],
-          ["Address", loggedInUser.address || "N/A"],
-          ["Email", loggedInUser.email || "N/A"],
-        ],
-        theme: "grid",
-        styles: { 
-          fontSize: 10,
-          cellPadding: 5
-        },
-        headStyles: { 
-          fillColor: [80, 80, 80],
-          textColor: [255, 255, 255],
-          fontStyle: 'bold'
-        },
-        alternateRowStyles: { 
-          fillColor: lightGray
-        }
-      });
-      
-      // ===== TERMS AND CONDITIONS SECTION =====
-      currentY = doc.lastAutoTable.finalY + 10;
-      
-      // Add styled header for terms
-      doc.setFillColor(accentColor[0], accentColor[1], accentColor[2]);
-      doc.rect(15, currentY, 180, 8, "F");
-      doc.setTextColor(255, 255, 255);
-      doc.setFont("helvetica", "bold");
-      doc.text("TERMS AND CONDITIONS", 105, currentY + 6, { align: "center" });
-      
-      // Terms content
-      doc.setTextColor(0, 0, 0);
+      doc.text("Terms and Conditions:", 10, finalY);
+  
       doc.setFont("helvetica", "normal");
-      doc.setFontSize(10);
-      
       const terms = [
         "1. The client agrees to return the car in the same condition as received.",
         "2. The rental company is not responsible for any personal belongings left in the car.",
@@ -333,64 +199,23 @@ const BookingPage = () => {
         "4. The client agrees to abide by all traffic laws and regulations.",
         "5. Late returns may result in additional charges.",
       ];
-      
-      let yPos = currentY + 15;
+  
+      let yPos = finalY + 10;
       terms.forEach((term) => {
-        doc.text(term, 15, yPos);
-        yPos += 7;
+        doc.text(term, 10, yPos);
+        yPos += 8;
       });
-      
-      // ===== SIGNATURES SECTION =====
-      currentY = yPos + 10;
-      
-      // Add styled header for signatures
-      doc.setFillColor(accentColor[0], accentColor[1], accentColor[2]);
-      doc.rect(15, currentY, 180, 8, "F");
-      doc.setTextColor(255, 255, 255);
+  
       doc.setFont("helvetica", "bold");
-      doc.text("SIGNATURES", 105, currentY + 6, { align: "center" });
-      
-      // Signature lines
-      doc.setTextColor(0, 0, 0);
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(10);
-      
-      // Client signature
-      const clientSignY = currentY + 25;
-      doc.line(15, clientSignY, 90, clientSignY);
-      doc.text("Client Signature", 15, clientSignY + 5);
-      
-      // Company signature
-      doc.line(115, clientSignY, 190, clientSignY);
-      doc.text("Company Representative", 115, clientSignY + 5);
-      
-      // Date lines
-      const dateSignY = clientSignY + 20;
-      doc.line(15, dateSignY, 90, dateSignY);
-      doc.text("Date", 15, dateSignY + 5);
-      
-      doc.line(115, dateSignY, 190, dateSignY);
-      doc.text("Date", 115, dateSignY + 5);
-      
-      // ===== FOOTER =====
-      const pageCount = doc.getNumberOfPages();
-      for (let i = 1; i <= pageCount; i++) {
-        doc.setPage(i);
-        doc.setFontSize(8);
-        doc.setTextColor(100, 100, 100);
-        doc.text(
-          `Page ${i} of ${pageCount} | Contract #${contractNumber} | Generated on ${dateCreated}`,
-          105,
-          285,
-          { align: "center" }
-        );
-      }
-      
-      // Save the PDF
+      doc.text("Client Signature: ___________________", 10, yPos + 10);
+      doc.text(`Company Representative Signature:`, 10, yPos + 20);
+      doc.addImage(logo, "PNG", 95, yPos + 10, 50, 20, undefined, 'FAST');
+  
+      const dateCreated = new Date().toLocaleDateString();
+      doc.text(`Date Created: ${dateCreated}`, 10, yPos + 40);
+  
+      // ✅ تحميل ملف PDF بدلاً من إرساله عبر البريد
       doc.save("Car_Rental_Agreement.pdf");
-      
-      // Return the document for email attachment if needed
-      return doc;
       
     } catch (error) {
       console.error("Error generating PDF:", error);

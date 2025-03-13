@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Ajoutercontrats from "./Ajoutecontrats";
 import Contrat from "../contrats/Contrat";
-import { useLocation } from "react-router-dom";
 
 export default function Contrats() {
   const [contrats, setContrats] = useState([]);
