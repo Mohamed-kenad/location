@@ -84,23 +84,33 @@ export default function Contrats() {
     document.querySelector(".modal-backdrop")?.remove();
 };
 
-  // Pagination States
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
+
+const [currentPage, setCurrentPage] = useState(1);
+const [contractsPerPage] = useState(5);
+
+const indexOfLastContract = currentPage * contractsPerPage;
+const indexOfFirstContract = indexOfLastContract - contractsPerPage;
+const currentContracts = filteredContrats.slice(indexOfFirstContract, indexOfLastContract);
+const totalPages = Math.ceil(filteredContrats.length / contractsPerPage);
 
 
-  // Paginate the filtered contracts
-  const indexOfLastContract = currentPage * itemsPerPage;
-  const indexOfFirstContract = indexOfLastContract - itemsPerPage;
-  const currentContracts = filteredContrats.slice(indexOfFirstContract, indexOfLastContract);
-
-  // Handle page change
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(filteredContrats.length / itemsPerPage); i++) {
-    pageNumbers.push(i);
+const handlePageChange = (action) => {
+  if (action === "next" && currentPage < totalPages) {
+    setCurrentPage(prev => prev + 1);
+  } else if (action === "prev" && currentPage > 1) {
+    setCurrentPage(prev => prev - 1);
   }
+};
+
+const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+
+
+
+
+
+
+  
 
 
 
@@ -176,6 +186,39 @@ export default function Contrats() {
                 ))}
               </tbody>
             </table>
+                      {/* Pagination Controls */}
+        <div className="d-flex justify-content-center my-3">
+        <nav>
+          <ul className="pagination">
+            <li className="page-item">
+              <button
+                className="page-link"
+                onClick={() => handlePageChange('prev')}
+                disabled={currentPage === 1}
+              >
+                Previous
+              </button>
+            </li>
+            <li className="page-item">
+              <button className="page-link">
+                {currentPage} / {totalPages}
+              </button>
+            </li>
+            <li className="page-item">
+              <button
+                className="page-link"
+                onClick={() => handlePageChange('next')}
+                disabled={currentPage === totalPages}
+              >
+                Next
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+            
+
+
           </div>
         </div>
       </div>

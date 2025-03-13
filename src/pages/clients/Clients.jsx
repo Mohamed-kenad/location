@@ -186,9 +186,6 @@ const Clients = () => {
                 ))}
               </tbody>
             </table>
-          </div>
-        </div>
-      </div>
         {/* Pagination Controls */}
         <div className="d-flex justify-content-center my-3">
         <nav>
@@ -218,6 +215,9 @@ const Clients = () => {
             </li>
           </ul>
         </nav>
+      </div>
+          </div>
+        </div>
       </div>
 
       {/* Client Modal */}
