@@ -108,9 +108,10 @@ const handlePageChange = (action) => {
 
 useEffect(() => {
   if (location.state?.selectedMonth) {
-    setCurrentPage(1);
+    setCurrentPage(1); 
   }
 }, [location.state]);
+
 
 
 
