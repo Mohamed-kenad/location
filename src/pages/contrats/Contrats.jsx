@@ -106,14 +106,6 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
 
 
-
-
-
-
-  
-
-
-
   return (
     <div className="container-fluid min-vh-100 bg-light py-4">
 
@@ -223,24 +215,6 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
         </div>
       </div>
 
-
-       {/* Pagination Controls */}
-       <div className="pagination-controls d-flex justify-content-center mt-4">
-        <nav>
-          <ul className="pagination">
-            {pageNumbers.map((number) => (
-              <li
-                key={number}
-                className={`page-item ${number === currentPage ? "active" : ""}`}
-              >
-                <button className="page-link" onClick={() => paginate(number)}>
-                  {number}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </div>
 
 
 
