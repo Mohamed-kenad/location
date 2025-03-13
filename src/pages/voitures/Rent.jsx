@@ -106,7 +106,7 @@ const BookingPage = () => {
       await axios.post("https://json-server-api-q84y.onrender.com/contrats",booking);
 
        generatePDF({ car, startDate, endDate, totalPrice,loggedInUser });
-       sendEmailWithAttachment(loggedInUser.email, `${loggedInUser.firstName} ${loggedInUser.lastName}`, generatePDF);
+       sendEmailWithAttachment(loggedInUser.email, `${loggedInUser.firstName} ${loggedInUser.lastName}`,generatePDF,car ,startDate, endDate, totalPrice, loggedInUser);
   
       Swal.fire("Ajouté!", "Your reservation has been successfully confirmed!", "success").then((result) => {
         if (result.isConfirmed) {
@@ -121,13 +121,33 @@ const BookingPage = () => {
   };
 
   
- 
-  const sendEmailWithAttachment = (clientEmail, clientName, pdfBase64) => {
+  const sendEmailWithAttachment = (clientEmail, clientName, pdfBase64, car, startDate, endDate, totalPrice, loggedInUser) => {
   
     const emailParams = {
       to_email: clientEmail,
       to_name: clientName,
-      message: "Attached is your car rental agreement.",
+      message: `
+      Dear ${clientName},
+      
+      Your car rental has been successfully booked. Here are the details of your booking:
+      car Name: ${car.name}
+      Car Model: ${car.modele}
+      Car Registration Number: ${car.matricule}
+      Rental Period: From ${startDate} to ${endDate}
+      Daily rental price : ${car.price} DH
+      Total Price: ${totalPrice.toFixed(2)} DH
+      
+      Client Name: ${loggedInUser.firstName} ${loggedInUser.lastName}
+      Phone: ${loggedInUser.phone}
+      Address: ${loggedInUser.address}
+      
+      The rental agreement is attached to this email.
+      
+      Thank you for choosing our service!
+      
+      Best Regards,
+      Car Rental Service Team
+    `,
       attachment: [
         {
           content: pdfBase64,

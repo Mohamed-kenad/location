@@ -727,6 +727,18 @@
       "password": "0000",
       "avatar": "https://cdn-icons-png.flaticon.com/512/3135/3135725.png",
       "role": "user"
+    },
+    {
+      "id": "cc9a",
+      "firstName": "yassin",
+      "lastName": "yassin",
+      "sexe": "Male",
+      "phone": "0622222222",
+      "address": "agadir",
+      "email": "mohamedkenad10@gmail.com",
+      "password": "0000",
+      "avatar": "https://cdn-icons-png.flaticon.com/512/3135/3135725.png",
+      "role": "user"
     }
   ]
 }
