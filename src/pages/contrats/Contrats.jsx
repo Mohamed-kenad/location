@@ -107,14 +107,7 @@ const handlePageChange = (action) => {
   }
 };
 
-useEffect(() => {
-  console.log('Location state:', location.state);
-  if (location.state?.selectedMonth) {
-    setCurrentPage(1);
-  }
-}, [location.state]);
 
-console.log('Current page:', currentPage);
 
 
 
