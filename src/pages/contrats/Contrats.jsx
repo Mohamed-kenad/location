@@ -102,7 +102,7 @@ const handlePageChange = (action) => {
   }
 };
 
-const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
 
 
 
