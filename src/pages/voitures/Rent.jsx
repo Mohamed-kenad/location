@@ -8,6 +8,8 @@ import autoTable from "jspdf-autotable";
 import logo from "../../assets/logo.png";
 import emailjs from "@emailjs/browser";
 
+
+
 const BookingPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -17,10 +19,14 @@ const BookingPage = () => {
   const now = new Date();
   now.setDate(now.getDate() + initialDate);  
   const newDate = now.toISOString().split('T')[0];  
+ 
+  
   
   const [startDate, setStartDate] = useState(newDate || "");  
   const [endDate, setEndDate] = useState("");
   
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
   
@@ -64,7 +70,7 @@ const BookingPage = () => {
   
       let clientExists = true;
       try {
-        const response = await axios.get(`https://json-server-api-q84y.onrender.com/client/${clientId}`);
+        const response = await axios.get(`http://localhost:8080/client/${clientId}`);
 
         if (!response.data) {
           clientExists = false;
@@ -78,7 +84,7 @@ const BookingPage = () => {
       }
   
       if (!clientExists) {
-        await axios.post("https://json-server-api-q84y.onrender.com/client", {
+        await axios.post("http://localhost:8080/client", {
           id: loggedInUser.id,
           firstName: loggedInUser.firstName,
           lastName: loggedInUser.lastName,
@@ -97,10 +103,10 @@ const BookingPage = () => {
         statut: "pending",
       };
   
-      await axios.post("https://json-server-api-q84y.onrender.com/contrats", booking);
+      await axios.post("http://localhost:8080/contrats",booking);
 
-      const pdfBase64 = generatePDF({ car, startDate, endDate, totalPrice, loggedInUser });
-      sendEmailWithAttachment(loggedInUser.email, `${loggedInUser.firstName} ${loggedInUser.lastName}`, pdfBase64);
+       generatePDF({ car, startDate, endDate, totalPrice,loggedInUser });
+       sendEmailWithAttachment(loggedInUser.email, `${loggedInUser.firstName} ${loggedInUser.lastName}`, generatePDF);
   
       Swal.fire("Ajouté!", "Your reservation has been successfully confirmed!", "success").then((result) => {
         if (result.isConfirmed) {
@@ -114,12 +120,22 @@ const BookingPage = () => {
     }
   };
 
+  
+ 
   const sendEmailWithAttachment = (clientEmail, clientName, pdfBase64) => {
+  
     const emailParams = {
       to_email: clientEmail,
       to_name: clientName,
-      message: "Attached is your car rental agreement. ",
-      attachment: pdfBase64,
+      message: "Attached is your car rental agreement.",
+      attachment: [
+        {
+          content: pdfBase64,
+          filename: "Car_Rental_Agreement.pdf", 
+          type: "application/pdf",
+          disposition: "attachment", 
+        },
+      ],
     };
   
     emailjs
@@ -205,131 +221,186 @@ const BookingPage = () => {
     }
   };
       
-
-      
   const calculateTotalPrice = () => {
     if (!startDate || !endDate || !car.price) return 0;
     const start = new Date(startDate);
     const end = new Date(endDate);
     const diffInDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24) + 1);
     return diffInDays * parseFloat(car.price);
-  };
+};
+
 
   return (
     <>
-      <div className="d-flex flex-column min-vh-50">
-        <main className=" container d-inline py-5 my-3">
-          <button className="btn btn-outline-primary mb-4" onClick={() => navigate(-1)}>
-            <i className="bi bi-arrow-left"></i> Back
-          </button>
-          <h1 className="fs-2 fw-bold mb-4">Book Your Rental</h1>
+    
+    <div className="d-flex flex-column min-vh-50">
+      <main className=" container d-inline py-5 my-3">
+        <button className="btn btn-outline-primary mb-4" onClick={() => navigate(-1)}>
+          <i className="bi bi-arrow-left"></i> Back
+        </button>
+        <h1 className="fs-2 fw-bold mb-4">Book Your Rental</h1>
 
-          <div className="row g-4">
-            <div className="col-12 col-md-6 mt-3">
-              <div className="card border-0 position-relative">
-                <img src={car.image || "/placeholder.svg"} alt={car.model} className="card-img-top rounded-3 shadow-sm" style={{maxHeight:"400px"}}/>
-                <span 
-                  style={{
-                    position: 'absolute',
-                    top: '15px',  
-                    left: '20px',
-                    background: car.disponible 
-                      ? 'linear-gradient(135deg, #34C759 0%, #28A745 100%)' 
-                      : 'linear-gradient(135deg, #FF4444 0%, #DC3545 100%)', 
-                    color: 'white',
-                    padding: '6px 18px', 
-                    borderRadius: '25px', 
-                    fontWeight: '500', 
-                    boxShadow: '0 2px 4px rgba(0,0,0,0.2)', 
-                    transition: 'all 0.3s ease', 
-                  }}
-                >
-                  {car.disponible ? "Disponible" : "Non Disponible"}
-                </span>
-                {initialDate !== 0 ?
-                <div 
-                  className="position-absolute bottom-50 start-50 translate-middle-x mb-4 w-100"
-                  style={{
-                    background: 'rgba(0, 0, 0, 0.7)',
-                    padding: '8px 15px',
-                  }}
-                >
-                  <p 
-                    className="mb-0 text-white text-center"
-                    style={{
-                      fontSize: '1rem',
-                      fontWeight: '400',
-                      textShadow: '0 1px 2px rgba(0,0,0,0.3)', 
-                    }}
-                  >
-                    Available in {initialDate} day (s)  
-                  </p>
-                </div>:""
-                }
-                <div className="card-body px-0">
-                  <h2 className="fs-3 fw-semibold mt-2">{car.model}</h2>
-                  <p className="fs-4 fw-bold">${car.price} / day</p>
-                </div>
-              </div>
-            </div>
+        <div className="row g-4">
 
-            <div className="col-12 col-md-6 my-auto">
-              <div className="card border-0 shadow-sm p-4">
-                <form onSubmit={handleSubmit}>
-                  <div className="row g-4">
-                    <div className="col-12 col-sm-6">
-                      <div className="mb-3">
-                        <label htmlFor="startDate" className="form-label fw-medium">
-                          Start Date
-                        </label>
-                        <input 
-                          type="date" 
-                          id="startDate"
-                          className="form-control form-control-lg" 
-                          value={startDate} 
-                          onChange={(e) => setStartDate(e.target.value)} 
-                          required 
-                        />
-                      </div>
-                    </div>
-                    <div className="col-12 col-sm-6">
-                      <div className="mb-3">
-                        <label htmlFor="endDate" className="form-label fw-medium">
-                          End Date
-                        </label>
-                        <input 
-                          type="date" 
-                          id="endDate"
-                          className="form-control form-control-lg" 
-                          value={endDate} 
-                          onChange={(e) => setEndDate(e.target.value)} 
-                          required 
-                        />
-                      </div>
-                    </div>
-                    <div className="col-12">
-                      <label className="form-label fw-medium">Prix Total</label>
-                      <div className="input-group input-group-sm">
-                        <span className="input-group-text form-control form-control-lg">{calculateTotalPrice()} DH</span>
-                      </div>
-                    </div>
-                    <div className="col-12">
-                      <button 
-                        type="submit" 
-                        className="btn btn-primary btn-lg w-100 mt-3 shadow-sm"
-                      >
-                        Confirm Booking ({calculateTotalPrice()} DH)
-                      </button>
-                    </div>
-                  </div>
-                </form>
+          <div className="col-12 col-md-6 mt-3">
+            <div className="card border-0 position-relative">
+              <img src={car.image || "/placeholder.svg"} alt={car.model} className="card-img-top rounded-3 shadow-sm" style={{maxHeight:"400px"}}/>
+              <span 
+              style={{
+                position: 'absolute',
+                top: '15px',  
+                left: '20px',
+                background: car.disponible 
+                  ? 'linear-gradient(135deg, #34C759 0%, #28A745 100%)' 
+                  : 'linear-gradient(135deg, #FF4444 0%, #DC3545 100%)', 
+                color: 'white',
+                padding: '6px 18px', 
+                borderRadius: '25px', 
+                fontWeight: '500', 
+                boxShadow: '0 2px 4px rgba(0,0,0,0.2)', 
+                transition: 'all 0.3s ease', 
+              }}
+            >
+              {car.disponible ? "Disponible" : "Non Disponible"}
+            </span>
+            {initialDate !== 0 ?
+            <div 
+              className="position-absolute bottom-50 start-50 translate-middle-x mb-4 w-100"
+              style={{
+                background: 'rgba(0, 0, 0, 0.7)',
+                padding: '8px 15px',
+
+                
+              }}
+            >
+
+              <p 
+                className="mb-0 text-white text-center"
+                style={{
+                  fontSize: '1rem',
+                  fontWeight: '400',
+                  textShadow: '0 1px 2px rgba(0,0,0,0.3)', 
+                }}
+              >
+                 Available in {initialDate} day (s)  
+              </p>
+            </div>:""
+        }
+              <div className="card-body px-0">
+                <h2 className="fs-3 fw-semibold mt-2">{car.model}</h2>
+                <p className="fs-4 fw-bold">${car.price} / day</p>
               </div>
             </div>
           </div>
-        </main>
-      </div>
+
+
+
+          <div className="col-12 col-md-6 my-auto">
+            <div className="card border-0 shadow-sm p-4">
+              <form onSubmit={handleSubmit}>
+                <div className="row g-4">
+                  <div className="col-12 col-sm-6">
+                    <div className="mb-3">
+                      <label htmlFor="startDate" className="form-label fw-medium">
+                        Start Date
+                      </label>
+                      <input 
+                        type="date" 
+                        id="startDate"
+                        className="form-control form-control-lg" 
+                        value={startDate} 
+                        onChange={(e) => setStartDate(e.target.value)} 
+                        required 
+                      />
+                    </div>
+                  </div>
+                  <div className="col-12 col-sm-6">
+                    <div className="mb-3">
+                      <label htmlFor="endDate" className="form-label fw-medium">
+                        End Date
+                      </label>
+                      <input 
+                        type="date" 
+                        id="endDate"
+                        className="form-control form-control-lg" 
+                        value={endDate} 
+                        onChange={(e) => setEndDate(e.target.value)} 
+                        required 
+                      />
+                    </div>
+                  </div>
+                    <div className="col-12">
+                        <label className="form-label fw-medium">Prix Total</label>
+                        <div className="input-group input-group-sm">
+                            <span className="input-group-text form-control form-control-lg">{calculateTotalPrice()} DH</span>
+                        </div>
+                    </div>
+                    {/* <div className="col-12">
+                      <div className="form-group">
+                        <label className="form-label">First Name</label>
+                        <input type="text" className="form-control" value={name} onChange={(e) => setName(e.target.value)} required />
+                      </div>
+                    </div>
+                    
+                    <div className="col-12">
+                      <div className="form-group">
+                        <label className="form-label">Last Name</label>
+                        <input type="text" className="form-control" value={nom} onChange={(e) => setNom(e.target.value)} required />
+                      </div>
+                    </div>
+                    
+                    <div className="col-12">
+                      <div className="form-group">
+                        <label className="form-label">CIN</label>
+                        <input type="text" className="form-control" value={cin} onChange={(e) => setCin(e.target.value)} required />
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div className="form-group">
+                        <label className="form-label">Permis</label>
+                        <input type="text" className="form-control" value={permis} onChange={(e) => setPermis(e.target.value)} required />
+                      </div>
+                    </div>
+                    
+                    <div className="col-12">
+                      <div className="form-group">
+                        <label className="form-label">Email</label>
+                        <input type="email" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                      </div>
+                    </div>
+                    
+                    <div className="col-12">
+                      <div className="form-group">
+                        <label className="form-label">Phone</label>
+                        <input type="tel" className="form-control" value={phone} onChange={(e) => setPhone(e.target.value)} required />
+                      </div>
+                    </div>
+                    
+                    <div className="col-12">
+                      <div className="form-group">
+                        <label className="form-label">Adresse</label> 
+                        <input type="text" className="form-control" value={address} onChange={(e) => setAddress(e.target.value)} required />
+                      </div>
+                    </div> */}
+                  <div className="col-12">
+                    <button 
+                      type="submit" 
+                      className="btn btn-primary btn-lg w-100 mt-3 shadow-sm"
+                    >
+                      Confirm Booking ({calculateTotalPrice()} DH)
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </main>
+  
+    </div>
       <Footer/>
     </>
+   
   );
 };
 

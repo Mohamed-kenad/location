@@ -182,11 +182,10 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
         <div className="d-flex justify-content-center my-3">
         <nav>
           <ul className="pagination">
-            <li className="page-item">
+            <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
               <button
                 className="page-link"
                 onClick={() => handlePageChange('prev')}
-                disabled={currentPage === 1}
               >
                 Previous
               </button>
@@ -196,11 +195,10 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
                 {currentPage} / {totalPages}
               </button>
             </li>
-            <li className="page-item">
+            <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
               <button
                 className="page-link"
                 onClick={() => handlePageChange('next')}
-                disabled={currentPage === totalPages}
               >
                 Next
               </button>
