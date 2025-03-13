@@ -14,16 +14,8 @@ export default function Contrats() {
   const [filterStatus, setFilterStatus] = useState("all");
   const location = useLocation();
 
-useEffect(() => {
-  console.log('Location state:', location.state);
-  if (location.state?.selectedMonth) {
-    setCurrentPage(1);
-  }
-}, [location.state]);
-
-console.log('Current page:', currentPage);
-
-
+  
+  
   useEffect(() => {
     axios.get("https://json-server-api-q84y.onrender.com/voitures/")
       .then(res => setVoitures(res.data))
@@ -61,7 +53,7 @@ console.log('Current page:', currentPage);
     if (filterStatus === "canceled") return isMatchingSearchTerm && isCanceled;
     return false;
   });
-
+  
   const open = (id, type) => {
     const modalElement = document.getElementById("exampleModal");
     const modal = window.bootstrap.Modal.getOrCreateInstance(modalElement);
@@ -70,7 +62,7 @@ console.log('Current page:', currentPage);
     document.getElementById("voitureInfo").style.display = "none";
     document.getElementById("clientInfo").style.display = "none";
     document.getElementById("ajouterContrat").style.display = "none";
-
+    
     if (type === "voiture") {
       const data = voitures.find((v) => v.id === id);
       setVoitureselect(data);
@@ -95,8 +87,8 @@ console.log('Current page:', currentPage);
     document.getElementById("contractModal")?.classList.remove("show");
     document.body.classList.remove("modal-open");
     document.querySelector(".modal-backdrop")?.remove();
-};
-
+  };
+  
 
 const [currentPage, setCurrentPage] = useState(1);
 const [contractsPerPage] = useState(7);
@@ -115,6 +107,14 @@ const handlePageChange = (action) => {
   }
 };
 
+useEffect(() => {
+  console.log('Location state:', location.state);
+  if (location.state?.selectedMonth) {
+    setCurrentPage(1);
+  }
+}, [location.state]);
+
+console.log('Current page:', currentPage);
 
 
 
