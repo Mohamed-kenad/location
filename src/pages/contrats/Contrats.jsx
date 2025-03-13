@@ -12,7 +12,6 @@ export default function Contrats() {
   const [clientselect, setClientselect] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
-  const location = useLocation();
 
   
   
@@ -180,7 +179,7 @@ const handlePageChange = (action) => {
               </thead>
               <tbody>
                 {currentContracts.map((c) => (
-                  <Contrat key={c.id} c={c} contrats={contrats} clients={clients} voitures={voitures} open={open} setContrats={setContrats}  setCurrentPage={setCurrentPage}  />
+                  <Contrat key={c.id} c={c} contrats={contrats} clients={clients} voitures={voitures} open={open} setContrats={setContrats}   />
                 ))}
               </tbody>
             </table>
