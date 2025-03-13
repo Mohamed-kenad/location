@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Ajoutercontrats from "./Ajoutecontrats";
 import Contrat from "../contrats/Contrat";
+import { useLocation } from "react-router-dom";
 
 export default function Contrats() {
   const [contrats, setContrats] = useState([]);
@@ -101,6 +102,16 @@ const handlePageChange = (action) => {
     setCurrentPage(prev => prev - 1);
   }
 };
+
+const location = useLocation();
+
+useEffect(() => {
+  if (location.state?.selectedMonth) {
+    // setSelectedMonth(location.state.selectedMonth);
+    setCurrentPage(1); 
+  }
+}, [location.state]);
+
 
 
 
