@@ -86,7 +86,7 @@ export default function Contrats() {
 
 
 const [currentPage, setCurrentPage] = useState(1);
-const [contractsPerPage] = useState(5);
+const [contractsPerPage] = useState(7);
 
 const indexOfLastContract = currentPage * contractsPerPage;
 const indexOfFirstContract = indexOfLastContract - contractsPerPage;
@@ -178,34 +178,34 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
                 ))}
               </tbody>
             </table>
-                      {/* Pagination Controls */}
-        <div className="d-flex justify-content-center my-3">
-        <nav>
-          <ul className="pagination">
-            <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-              <button
-                className="page-link"
-                onClick={() => handlePageChange('prev')}
-              >
-                Previous
-              </button>
-            </li>
-            <li className="page-item">
-              <button className="page-link">
-                {currentPage} / {totalPages}
-              </button>
-            </li>
-            <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-              <button
-                className="page-link"
-                onClick={() => handlePageChange('next')}
-              >
-                Next
-              </button>
-            </li>
-          </ul>
-        </nav>
-      </div>
+                            {/* Pagination Controls */}
+              <div className="d-flex justify-content-center my-3">
+              <nav>
+                <ul className="pagination">
+                  <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                    <button
+                      className="page-link"
+                      onClick={() => handlePageChange('prev')}
+                    >
+                      Previous
+                    </button>
+                  </li>
+                  <li className="page-item">
+                    <button className="page-link">
+                      {currentPage} / {totalPages}
+                    </button>
+                  </li>
+                  <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                    <button
+                      className="page-link"
+                      onClick={() => handlePageChange('next')}
+                    >
+                      Next
+                    </button>
+                  </li>
+                </ul>
+              </nav>
+            </div>
             
 
 
