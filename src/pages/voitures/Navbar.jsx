@@ -37,8 +37,7 @@ const Navbar = ({ scrollToSection, toggleTheme, isDarkMode }) => {
           type: contract.statut === "confirmed" ? "success" : 
                 contract.statut === "canceled" ? "danger" : "info"
         }));
-        const sortedNotifications = notifs.sort((a, b) => b.date - a.date);
-        setNotifications(sortedNotifications);
+        setNotifications(notifs);
       }
     });
 

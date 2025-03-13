@@ -70,7 +70,7 @@ const BookingPage = () => {
   
       let clientExists = true;
       try {
-        const response = await axios.get(`http://localhost:8080/client/${clientId}`);
+        const response = await axios.get(`https://json-server-api-q84y.onrender.com/client/${clientId}`);
 
         if (!response.data) {
           clientExists = false;
@@ -84,7 +84,7 @@ const BookingPage = () => {
       }
   
       if (!clientExists) {
-        await axios.post("http://localhost:8080/client", {
+        await axios.post("https://json-server-api-q84y.onrender.com/client", {
           id: loggedInUser.id,
           firstName: loggedInUser.firstName,
           lastName: loggedInUser.lastName,
@@ -103,7 +103,7 @@ const BookingPage = () => {
         statut: "pending",
       };
   
-      await axios.post("http://localhost:8080/contrats",booking);
+      await axios.post("https://json-server-api-q84y.onrender.com/contrats",booking);
 
        generatePDF({ car, startDate, endDate, totalPrice,loggedInUser });
        sendEmailWithAttachment(loggedInUser.email, `${loggedInUser.firstName} ${loggedInUser.lastName}`, generatePDF);
