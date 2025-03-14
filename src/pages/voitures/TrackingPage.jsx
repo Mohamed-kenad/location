@@ -36,7 +36,8 @@ const TrackingPage = () => {
 
         const today = new Date();
         const filteredReservations = response.data.filter((c) =>c.clientId === loggedInUser.id &&
-        ["pending", "confirmed", "canceled"].includes(c.statut) && new Date(c.datefin) >= today );
+        ["pending", "confirmed", "canceled"].includes(c.statut) && new Date(c.datefin) >= today )
+        .sort((a, b) => new Date(b.datedebut) - new Date(a.datedebut))
 
         
           const contractId = location.state?.id;

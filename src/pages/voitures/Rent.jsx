@@ -29,6 +29,10 @@ const BookingPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateDates(startDate, endDate)) {
+      return
+    }
   
     const loggedInUser = JSON.parse(localStorage.getItem("user"));
   
@@ -251,6 +255,24 @@ const BookingPage = () => {
     return diffInDays * parseFloat(car.price);
 };
 
+const today = new Date().toISOString().split("T")[0];
+
+const [dateError, setDateError] = useState("");
+
+const validateDates = (start, end) => {
+  if (start && end) {
+    const startDate = new Date(start)
+    const endDate = new Date(end)
+
+    if (startDate > endDate) {
+      setDateError("The start date cannot be later than the end date.")
+      return false
+    }
+  }
+  setDateError("")
+  return true
+}
+
 
   return (
     <>
@@ -332,6 +354,8 @@ const BookingPage = () => {
                         className="form-control form-control-lg" 
                         value={startDate} 
                         onChange={(e) => setStartDate(e.target.value)} 
+                        min={newDate || today}
+                        
                         required 
                       />
                     </div>
@@ -347,6 +371,7 @@ const BookingPage = () => {
                         className="form-control form-control-lg" 
                         value={endDate} 
                         onChange={(e) => setEndDate(e.target.value)} 
+                        min={today}
                         required 
                       />
                     </div>
@@ -398,6 +423,13 @@ const BookingPage = () => {
                         <input type="text" className="form-control" value={address} onChange={(e) => setAddress(e.target.value)} required />
                       </div>
                     </div> */}
+                    {dateError && (
+                      <div className="col-12">
+                        <div className="alert alert-danger" role="alert">
+                          {dateError}
+                        </div>
+                      </div>
+                    )}
                   <div className="col-12">
                     <button 
                       type="submit" 
