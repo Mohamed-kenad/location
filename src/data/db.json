@@ -306,16 +306,6 @@
       "statut": "confirmed"
     },
     {
-      "id": "3a29",
-      "clientId": "08ea",
-      "voitureId": "1",
-      "datedebut": "2025-03-07",
-      "datefin": "2025-03-19",
-      "prix": 200,
-      "total": 2600,
-      "statut": "canceled"
-    },
-    {
       "id": "860b",
       "clientId": "08ea",
       "voitureId": "1",
