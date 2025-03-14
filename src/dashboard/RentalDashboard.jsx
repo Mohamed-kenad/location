@@ -26,7 +26,6 @@ const RentalDashboard = ({ c }) => {
     return data;
   };
 
- 
   const handlePointClick = (payload) => {
 
     const clickedMonth = payload.month;
