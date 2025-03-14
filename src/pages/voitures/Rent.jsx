@@ -252,6 +252,7 @@ const BookingPage = () => {
     const start = new Date(startDate);
     const end = new Date(endDate);
     const diffInDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24) + 1);
+    if(diffInDays < 1) return 0;
     return diffInDays * parseFloat(car.price);
 };
 
