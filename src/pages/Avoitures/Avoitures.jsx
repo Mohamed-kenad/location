@@ -12,7 +12,7 @@ export default function Avoitures() {
   const [itemsPerPage] = useState(5); // Number of items per page
 
   useEffect(() => {
-    axios.get("https://json-server-api-q84y.onrender.com/voitures")
+    axios.get("https://json-server-api-q84y.onrender.com/cars")
       .then(res => {
         const sortedVoitures = res.data.sort((a, b) => b.disponible - a.disponible);
         setVoitures(sortedVoitures);
@@ -30,7 +30,7 @@ export default function Avoitures() {
       confirmButtonText: "Oui, supprimer !"
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`https://json-server-api-q84y.onrender.com/voitures/${idv}`)
+        axios.delete(`https://json-server-api-q84y.onrender.com/cars/${idv}`)
           .then(() => {
             Swal.fire("Supprimé!", "Le véhicule a été supprimé.", "success");
             setVoitures((data) => data.filter((v) => v.id !== idv));
@@ -62,7 +62,7 @@ export default function Avoitures() {
 
   const handleSubmit = () => {
     if (modalMode === 'edit') {
-      axios.put(`https://json-server-api-q84y.onrender.com/voitures/${selectVoiture.id}`, selectVoiture)
+      axios.put(`https://json-server-api-q84y.onrender.com/cars/${selectVoiture.id}`, selectVoiture)
         .then((res) => { 
           setVoitures(prev => prev.map(v => v.id === selectVoiture.id ? res.data : v));
           Swal.fire("Mis à jour!", "Les informations de la voiture ont été modifiées.", "success");
