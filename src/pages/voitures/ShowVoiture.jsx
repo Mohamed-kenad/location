@@ -11,7 +11,7 @@ const CarDetails = () => {
 
   useEffect(() => {
     axios
-      .get(`https://json-server-api-q84y.onrender.com/voitures/${id}`)
+      .get(`https://json-server-api-q84y.onrender.com/cars/${id}`)
       .then((res) => setCar(res.data))
       .catch((err) => console.error(err));
           // Fetch contracts
